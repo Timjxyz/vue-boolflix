@@ -10,8 +10,8 @@
                 </div>
             
                 <div class="container-text flip-card-back">
-                    <div class="translte-title">{{getTitle()}}</div>
-                    <div class="og-title">{{info.original_title ? info.original_title : info.original_name}}</div>
+                    <div class="translte-title">Titolo: {{getTitle()}}</div>
+                    <div class="og-title">Titolo originale: {{info.original_title ? info.original_title : info.original_name}}</div>
                     <div>
                         <img v-if="language.includes(info.original_language)" :src="require('../../assets/flags/' + info.original_language + '.png')" alt="">
                         <span v-else> {{info.original_language}}</span>
@@ -21,6 +21,8 @@
                         <i v-for="i in 5" :key="i" class="fa-star" :class="(i < getStar) ? 'fa-solid' : 'fa-regular' "></i>
                         {{info.vote_averange}}
                     </div>
+
+                    <div class="overview">Overview: {{info.overview}}</div>
 
                 </div>
 
@@ -78,11 +80,14 @@ export default {
                 object-fit: cover;
             }
             .container-text{
-        
+                overflow-y:auto ;
                 img{
                     width: 40px;
                     height: 20px;
                     object-fit: cover;
+                }
+                .overview{
+                    text-align: start;
                 }
 
             }
