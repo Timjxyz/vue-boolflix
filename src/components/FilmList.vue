@@ -1,6 +1,6 @@
 <template>
   <section>
-       <h1 id="title">Lista Film</h1>
+       <h1 id="title">----Lista Film----</h1>
       <ul class="d-flex">
           <MyCard v-for="(film, index) in films" :key="index" :info='film'/>
       </ul>
@@ -26,6 +26,7 @@ export default {
         text-align: center;
         color: white;
         font-size: 60px;
+        padding: 30px;
     }
     .d-flex{
         display: flex;
