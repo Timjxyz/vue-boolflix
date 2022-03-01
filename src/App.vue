@@ -1,28 +1,82 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <MyHeader @search="doSearch" />
+    <MyMain :films="films" :series="series"/>
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MyHeader from './components/MyHeader.vue'
+import MyMain from './components/MyMain.vue'
+const axios = require('axios');
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    MyHeader,
+    MyMain
+  },
+  data(){
+    return{
+      films:[],
+      series:[],
+      apy_key:'d7660e56e06ac105e09f6f82264e7f01',
+      language:'it-IT'
+    }
+  },
+  methods:{
+    doSearch(keyword){
+      const params={
+          params:{
+            'api_key':this.apy_key,
+            'query':keyword,
+            'language':this.language
+          }
+        };
+        this.getFilms(params);
+        this.getTv(params);
+
+    },
+
+    getFilms(params) {
+
+        axios.get('https://api.themoviedb.org/3/search/movie/' , params)
+        
+        .then((response) => {
+            this.films = response.data.results;
+    
+          })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        });
+        
+
+    },
+    getTv(params) {
+        axios.get('https://api.themoviedb.org/3/search/tv/' , params)
+        
+        .then((response) => {
+            this.series = response.data.results;
+    
+          })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        });
+        
+
+    },
   }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
+  *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+  }
 </style>
